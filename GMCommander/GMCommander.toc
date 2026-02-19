@@ -1,0 +1,9 @@
+## Interface: 70305
+## Title: GM Commander
+## Notes: A GM command interface for item and gold management
+## Author: Your Name
+## Version: 1.1.0
+## SavedVariables: GMCommanderDB
+
+ItemDatabase.lua
+GMCommander.lua
