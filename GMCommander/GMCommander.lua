@@ -118,7 +118,7 @@ local function CreateScrollList(parent, width, height)
     return container
 end
 
-local function CreateItemButton(parent, width, item, quantityBox)
+local function CreateItemButton(parent, width, item, quantityBox, bonusBox, clickOverride)
     local btn = CreateFrame("Button", nil, parent)
     btn:SetSize(width, 24)
     SetSimpleBackdrop(btn, {0.1, 0.1, 0.1, 0.8}, {0.3, 0.3, 0.3, 1})
@@ -156,8 +156,15 @@ local function CreateItemButton(parent, width, item, quantityBox)
         GameTooltip:Hide()
     end)
     btn:SetScript("OnClick", function()
-        local qty = tonumber(quantityBox:GetText()) or 1
-        SendGMCommand(".additem " .. item.id .. " " .. qty)
+        if clickOverride then
+            clickOverride(item)
+        else
+            local qty = tonumber(quantityBox:GetText()) or 1
+            local bonus = bonusBox and bonusBox:GetText() or ""
+            local cmd = ".add " .. item.id .. " " .. qty
+            if bonus ~= "" then cmd = cmd .. " " .. bonus end
+            SendGMCommand(cmd)
+        end
     end)
 
     btn.item = item
@@ -224,15 +231,19 @@ end
 -- Nothing overlaps because every section has a fixed Y anchor.
 -- ============================================================================
 
-local function CreateItemBrowserTab(parent, tabId, title, titleColor, categories)
+local function CreateItemBrowserTab(parent, tabId, title, titleColor, categories, itemClickHandler)
     local content = CreateTabContent(parent, tabId)
 
     -- Computed dimensions
     local CONTENT_W   = FRAME_W - 2 * PAD                              -- 690
     local CONTENT_H   = FRAME_H - TITLEBAR_H - TAB_H - 8 - PAD        -- 571
     local RIGHT_W     = CONTENT_W - SIDEBAR_W - 8                      -- 527
-    local ITEMS_Y     = -(32 + SUBCAT_H + 4)                           -- -131
-    local ITEMS_H     = CONTENT_H - 32 - SUBCAT_H - 4 - 2             -- 438
+    -- Row 1 (Y=0):   Search + Qty + Add ID   (32px)
+    -- Row 2 (Y=-32): Bonus ID presets + input (32px)
+    -- Subcats (Y=-64): fixed SUBCAT_H area
+    -- Items  (Y=-163): fills rest
+    local ITEMS_Y     = -(64 + SUBCAT_H + 4)                           -- -163
+    local ITEMS_H     = CONTENT_H - 64 - SUBCAT_H - 4 - 2             -- 406
 
     -- ---- LEFT SIDEBAR ------------------------------------------------
     local sidebar = CreateFrame("Frame", nil, content)
@@ -274,21 +285,69 @@ local function CreateItemBrowserTab(parent, tabId, title, titleColor, categories
     quantityBox:SetNumeric(true)
     quantityBox:SetText("1")
 
+    -- bonusBox declared early so addIdBtn's closure captures the upvalue slot
+    local bonusBox
+
     local addIdBtn = CreateButton(rightPanel, 58, 28, "Add ID")
     addIdBtn:SetPoint("LEFT", qtyCont, "RIGHT", 4, 0)
     addIdBtn:SetScript("OnClick", function()
         local id = tonumber(searchBox:GetText())
         if id then
             local qty = tonumber(quantityBox:GetText()) or 1
-            SendGMCommand(".additem " .. id .. " " .. qty)
+            local bonus = bonusBox and bonusBox:GetText() or ""
+            local cmd = ".add " .. id .. " " .. qty
+            if bonus ~= "" then cmd = cmd .. " " .. bonus end
+            SendGMCommand(cmd)
         else
             print("|cffff0000[GM Commander]|r Enter a numeric Item ID in the search box first")
         end
     end)
 
+    -- ---- BONUS ID ROW (Y = -32) ----------------------------------------
+    -- Preset buttons fill the bonus field; custom field allows free-form entry.
+    -- Common bonus IDs: 569=Heroic  561=Mythic  3337=TF/Epic  40=Socket
+    -- Format appended to command: .add <id> <qty> <id1>:<id2>:...
+    local bonusLabel = rightPanel:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    bonusLabel:SetPoint("TOPLEFT", 0, -38)
+    bonusLabel:SetText("|cffaaaaeeBonus:|r")
+
+    local bonusPresets = {
+        {label = "None",    ids = "",          color = {0.5, 0.5, 0.5}},
+        {label = "Heroic",  ids = "569",       color = {0.0, 0.5, 1.0}},
+        {label = "Mythic",  ids = "561",       color = {0.6, 0.0, 0.9}},
+        {label = "Epic TF", ids = "561:3337",  color = {1.0, 0.5, 0.0}},
+    }
+    local bonusPresetBtns = {}
+    local bpX = 44
+    for _, preset in ipairs(bonusPresets) do
+        local pb = CreateButton(rightPanel, 52, 22, preset.label)
+        pb:SetPoint("TOPLEFT", bpX, -34)
+        pb.text:SetFontObject(GameFontNormalSmall)
+        local capP = preset
+        pb:SetScript("OnClick", function()
+            bonusBox:SetText(capP.ids)
+            for _, b in ipairs(bonusPresetBtns) do
+                b:SetBackdropColor(0.1, 0.1, 0.1, 1)
+                b:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+            end
+            local c = capP.color
+            pb:SetBackdropColor(c[1]*0.2, c[2]*0.2, c[3]*0.2, 1)
+            pb:SetBackdropBorderColor(c[1], c[2], c[3], 1)
+        end)
+        table.insert(bonusPresetBtns, pb)
+        bpX = bpX + 56
+    end
+    -- Default to "None" highlighted
+    bonusPresetBtns[1]:SetBackdropColor(0.08, 0.08, 0.08, 1)
+    bonusPresetBtns[1]:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+
+    local bonusCont = CreateEditBox(rightPanel, RIGHT_W - bpX - 4, 22, "custom: 561:3337:40 ...")
+    bonusCont:SetPoint("TOPLEFT", bpX + 4, -34)
+    bonusBox = bonusCont.editBox  -- assign the upvalue declared above
+
     -- Subcategory area: FIXED height, never grows beyond SUBCAT_H
     local subcatFrame = CreateFrame("Frame", nil, rightPanel)
-    subcatFrame:SetPoint("TOPLEFT", 0, -32)
+    subcatFrame:SetPoint("TOPLEFT", 0, -64)
     subcatFrame:SetSize(RIGHT_W, SUBCAT_H)
     SetSimpleBackdrop(subcatFrame, {0.06, 0.06, 0.1, 0.85}, {0.2, 0.2, 0.32, 1})
 
@@ -319,13 +378,14 @@ local function CreateItemBrowserTab(parent, tabId, title, titleColor, categories
         local lc = itemsList.content
         for _, btn in ipairs(itemsList.buttons) do
             btn:Hide()
-            btn:SetParent(nil)
+            -- NOTE: do NOT call SetParent(nil) here - that re-parents to UIParent
+            -- causing buttons to stay visible when switching tabs (overlay bug)
         end
         wipe(itemsList.buttons)
 
         local yOff = 0
         for _, item in ipairs(items) do
-            local btn = CreateItemButton(lc, lc:GetWidth(), item, quantityBox)
+            local btn = CreateItemButton(lc, lc:GetWidth(), item, quantityBox, bonusBox, itemClickHandler)
             btn:SetPoint("TOPLEFT", 0, -yOff)
             table.insert(itemsList.buttons, btn)
             yOff = yOff + 26
@@ -475,6 +535,8 @@ local MOUNT_CATEGORIES = {
     {key = "MountsMammoths",      name = "Mammoths & Bears",color = {0.7,  0.7,  0.7 }},
     {key = "MountsMisc",          name = "Miscellaneous",   color = {0.6,  0.5,  0.4 }},
     {key = "MountsStore",         name = "Store / TCG",     color = {0.2,  0.7,  1.0 }},
+    {key = "MountsLegion",        name = "Legion",          color = {0.1,  0.9,  0.1 }},
+    {key = "MountsRaidDrops",     name = "Raid Drops",      color = {0.8,  0.3,  0.9 }},
 }
 
 local ITEMS_CATEGORIES = {
@@ -484,8 +546,7 @@ local ITEMS_CATEGORIES = {
 
 local LEGION_CATEGORIES = {
     {key = "LegionLegendaries", name = "Legendaries",    color = {1.0, 0.5, 0.0}},
-    {key = "MountsLegion",      name = "Legion Mounts",  color = {0.1, 0.9, 0.1}},
-    {key = "MountsRaidDrops",   name = "Raid Drops",     color = {0.8, 0.3, 0.9}},
+    {key = "LegionRaidGear",    name = "Raid Gear N/H/M",color = {0.8, 0.4, 0.0}},
 }
 
 local TRANSMOG_CATEGORIES = {
@@ -601,6 +662,15 @@ local function CreateMainFrame()
     closeBtn:SetHighlightTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Highlight")
     closeBtn:SetScript("OnClick", function() GMCFrame:Hide() end)
 
+    -- Reset button: clears any visual state and returns to tab 1
+    local resetBtn = CreateButton(GMCFrame, 55, 22, "Reset")
+    resetBtn:SetPoint("TOPRIGHT", closeBtn, "TOPLEFT", -6, 1)
+    resetBtn.text:SetFontObject(GameFontNormalSmall)
+    resetBtn:SetScript("OnClick", function()
+        SelectTab(1)
+        print("|cff00ccff[GM Commander]|r Interface reset to default. If overlays persist, type /reload")
+    end)
+
     tinsert(UISpecialFrames, "GMCommanderFrame")
 
     -- 5 tabs, evenly spaced
@@ -617,7 +687,9 @@ local function CreateMainFrame()
     CreateItemBrowserTab(GMCFrame, 1, "Mounts",   "|cff88ccff", MOUNT_CATEGORIES)
     CreateItemBrowserTab(GMCFrame, 2, "Items",    "|cff88ff88", ITEMS_CATEGORIES)
     CreateItemBrowserTab(GMCFrame, 3, "Legion",   "|cffff8800", LEGION_CATEGORIES)
-    CreateItemBrowserTab(GMCFrame, 4, "Transmog", "|cffffdd44", TRANSMOG_CATEGORIES)
+    CreateItemBrowserTab(GMCFrame, 4, "Transmog", "|cffffdd44", TRANSMOG_CATEGORIES, function(item)
+        DressUpItemLink("item:" .. item.id)
+    end)
     CreateGoldTab(GMCFrame)
 
     SelectTab(1)

@@ -977,6 +977,349 @@ GMC_ItemDB = {
             },
         },
     },
+
+    -- ========================================================================
+    -- LEGION RAID GEAR
+    -- One entry per item — same item ID regardless of difficulty.
+    -- Use the Bonus ID row in the UI to control quality:
+    --   None      = base ilvl (normal quality)
+    --   Heroic    = bonus 569
+    --   Mythic    = bonus 561
+    --   Epic TF   = 561:3337  (mythic + titanforged = purple epic)
+    -- Custom combos: e.g.  561:3337:40  (mythic + TF + socket)
+    -- Reference: .add <itemID> <qty> <bonusID1>:<bonusID2>:...
+    -- ========================================================================
+    LegionRaidGear = {
+        category = "Legion Raid Gear",
+        icon = "Interface\\Icons\\Achievement_Dungeon_AntorNormal",
+        subcategories = {
+
+            -- ----------------------------------------------------------------
+            -- EMERALD NIGHTMARE (EN, 7.0) - Verified IDs from WarcraftDB
+            -- ----------------------------------------------------------------
+            ["EN: Early Bosses"] = {
+                -- Nythendra (Boss 1)
+                {id = 139321, name = "Swarming Plaguehive (Nythendra)"},
+                {id = 139320, name = "Ravaged Seed Pod (Nythendra)"},
+                {id = 139250, name = "Unwaking Slumber (Nythendra)"},
+                {id = 139249, name = "Shaladrassil's Blossom (Nythendra)"},
+                {id = 139252, name = "Preserved Worldseed (Nythendra)"},
+                {id = 139251, name = "Despoiled Dragonscale (Nythendra)"},
+                {id = 139212, name = "Creeping String of Larva (Nythendra)"},
+                {id = 139236, name = "Grubby Silver Ring (Nythendra)"},
+                -- Il'gynoth (Boss 2)
+                {id = 139259, name = "Cube of Malice (Il'gynoth)"},
+                {id = 139324, name = "Goblet of Nightmarish Ichor (Il'gynoth)"},
+                {id = 139258, name = "Radiating Metallic Shard (Il'gynoth)"},
+                {id = 139256, name = "Sloshing Core of Hatred (Il'gynoth)"},
+                {id = 139257, name = "Gore-Drenched Fetish (Il'gynoth)"},
+                {id = 139326, name = "Wriggling Sinew (Il'gynoth)"},
+                {id = 139325, name = "Spontaneous Appendages (Il'gynoth)"},
+                {id = 139237, name = "Dreadful Cyclopean Signet (Il'gynoth)"},
+                -- Elerethe Renferal (Boss 3)
+                {id = 139253, name = "Fel-Bloated Venom Sac (Elerethe)"},
+                {id = 139322, name = "Cocoon of Enforced Solitude (Elerethe)"},
+                {id = 139254, name = "Shrieking Bloodstone (Elerethe)"},
+                {id = 139255, name = "Scything Quill (Elerethe)"},
+                {id = 139323, name = "Twisting Wind (Elerethe)"},
+                {id = 138221, name = "Gossamer-Spun Greatcloak (Elerethe)"},
+                -- Ursoc (Boss 4)
+                {id = 139260, name = "Bloodied Bear Fang (Ursoc)"},
+                {id = 139261, name = "Tuft of Ironfur (Ursoc)"},
+                {id = 139327, name = "Unbridled Fury (Ursoc)"},
+                {id = 139329, name = "Bloodthirsty Instinct (Ursoc)"},
+                {id = 139328, name = "Ursoc's Rending Paw (Ursoc)"},
+                {id = 139330, name = "Heightened Senses (Ursoc)"},
+                {id = 139239, name = "Cursed Beartooth Necklace (Ursoc)"},
+            },
+            ["EN: Cenarius + Xavius"] = {
+                -- Dragons of Nightmare (Boss 5)
+                {id = 138225, name = "Phantasmal Echo (Dragons)"},
+                {id = 138227, name = "Entrancing Stone (Dragons)"},
+                {id = 138228, name = "Bioluminescent Mushroom (Dragons)"},
+                {id = 138226, name = "Nightmare Engulfed Jewel (Dragons)"},
+                {id = 138222, name = "Vial of Nightmare Fog (Dragons)"},
+                {id = 138224, name = "Unstable Horrorslime (Dragons)"},
+                {id = 138220, name = "Mindrend Band (Dragons)"},
+                -- Cenarius (Boss 6)
+                {id = 139333, name = "Horn of Cenarius (Cenarius)"},
+                {id = 139334, name = "Nature's Call (Cenarius)"},
+                {id = 139263, name = "Blessing of Cenarius (Cenarius)"},
+                {id = 139264, name = "Uplifting Emerald (Cenarius)"},
+                {id = 139265, name = "Radiant Dragon Egg (Cenarius)"},
+                {id = 139248, name = "Evergreen Vinewrap Drape (Cenarius)"},
+                {id = 139211, name = "Laughing Sister's Pouch-Chain (Cenarius)"},
+                -- Xavius (Boss 7 - Final)
+                {id = 139335, name = "Grotesque Statuette (Xavius)"},
+                {id = 139269, name = "Crystallized Drop of Eternity (Xavius)"},
+                {id = 139266, name = "Fragment of Eternal Spite (Xavius)"},
+                {id = 139267, name = "Azsharan Councillor's Clasp (Xavius)"},
+                {id = 139238, name = "Twice-Warped Azsharan Signet (Xavius)"},
+                {id = 139332, name = "Blackened Portalstone Necklace (Xavius)"},
+                {id = 139336, name = "Bough of Corruption (Xavius)"},
+                {id = 139268, name = "Nightmarish Elm Branch (Xavius)"},
+            },
+
+            -- ----------------------------------------------------------------
+            -- TRIAL OF VALOR (ToV, 7.1) - Verified IDs from WarcraftDB
+            -- ----------------------------------------------------------------
+            ["ToV: Odyn + Guarm"] = {
+                -- Odyn (Boss 1)
+                {id = 142519, name = "Favor of the Prime Designate (Odyn)"},
+                {id = 142511, name = "Unforged Titansteel (Odyn)"},
+                {id = 142508, name = "Chains of the Valorous (Odyn)"},
+                {id = 142514, name = "Ravens' Sight (Odyn)"},
+                {id = 142520, name = "Ring of Ascended Glory (Odyn)"},
+                -- Guarm (Boss 2)
+                {id = 142512, name = "Accursed Cuspid (Guarm)"},
+                {id = 142516, name = "Sizzling Fang (Guarm)"},
+                {id = 142515, name = "Chilled Incisor (Guarm)"},
+                {id = 142506, name = "Eye of Guarm (Guarm)"},
+            },
+            ["ToV: Helya (Final)"] = {
+                {id = 142507, name = "Brinewater Slime in a Bottle"},
+                {id = 142513, name = "Token of the Lightning Keeper"},
+                {id = 142510, name = "Phylactery of Unwilling Servitude"},
+                {id = 142518, name = "Fury of the Sea"},
+                {id = 142517, name = "Swell of the Tides"},
+                {id = 142521, name = "Drape of the Unworthy"},
+                {id = 142416, name = "Strand of Whelk Shells"},
+                {id = 142428, name = "Sea Fan Pendant"},
+            },
+
+            -- ----------------------------------------------------------------
+            -- NIGHTHOLD (NH, 7.1.5) - Verified IDs from Wowhead/WarcraftDB
+            -- Trinkets, rings, necks, cloaks organized by boss
+            -- ----------------------------------------------------------------
+            ["NH: Skorpyron-Trilliax"] = {
+                -- Skorpyron (Boss 1)
+                {id = 140789, name = "Animated Exoskeleton (Skorpyron)"},
+                {id = 140790, name = "Claw of the Crystalline Scorpid (Skorpyron)"},
+                {id = 140898, name = "Radiant String of Scorpid Eyes (Skorpyron)"},
+                -- Chronomatic Anomaly (Boss 2)
+                {id = 140791, name = "Royal Dagger Haft (Chrono Anomaly)"},
+                {id = 140792, name = "Erratic Metronome (Chrono Anomaly)"},
+                {id = 140821, name = "Precipice of Eternity (Chrono Anomaly)"},
+                {id = 140831, name = "Suspended Nightwell Droplet (Chrono Anomaly)"},
+                {id = 140843, name = "Flickering Timespark (Chrono Anomaly)"},
+                {id = 140894, name = "Zealous Timestone Pendant (Chrono Anomaly)"},
+                -- Trilliax (Boss 3)
+                {id = 140793, name = "Perfectly Preserved Cake (Trilliax)"},
+                {id = 140794, name = "Arcanogolem Digit (Trilliax)"},
+                {id = 140812, name = "Soggy Manascrubber Brush (Trilliax)"},
+                {id = 140818, name = "Foreign Contaminant (Trilliax)"},
+                {id = 140838, name = "Construct Personality Sphere (Trilliax)"},
+            },
+            ["NH: Aluriel-Elisande"] = {
+                -- Spellblade Aluriel (Boss 4)
+                {id = 140795, name = "Aluriel's Mirror (Spellblade Aluriel)"},
+                {id = 140796, name = "Entwined Elemental Foci (Aluriel)"},
+                {id = 140813, name = "Arcana Crux (Spellblade Aluriel)"},
+                {id = 140832, name = "Heart of Frost (Spellblade Aluriel)"},
+                {id = 140834, name = "Soul of Flame (Spellblade Aluriel)"},
+                {id = 140895, name = "Spellblade's Gemmed Signet (Aluriel)"},
+                -- High Botanist Tel'arn (Boss 5)
+                {id = 140801, name = "Fury of the Burning Sky (High Botanist)"},
+                {id = 140802, name = "Nightblooming Frond (High Botanist)"},
+                {id = 140822, name = "Breath of Dusk (High Botanist)"},
+                {id = 140836, name = "Sunflare Coal (High Botanist)"},
+                {id = 140839, name = "Parasitic Spore (High Botanist)"},
+                {id = 140896, name = "Ring of Braided Stems (High Botanist)"},
+                -- Tichondrius (Boss 6)
+                {id = 140797, name = "Fang of Tichondrius (Tichondrius)"},
+                {id = 140798, name = "Icon of Rot (Tichondrius)"},
+                {id = 140819, name = "Vampiric Fetish (Tichondrius)"},
+                {id = 140824, name = "Writ of Subjugation (Tichondrius)"},
+                {id = 140844, name = "Archaic Nathrezim Keepsake (Tichondrius)"},
+                {id = 140906, name = "Ring of Exclusive Servitude (Tichondrius)"},
+                -- Krosus (Boss 7)
+                {id = 140799, name = "Might of Krosus (Krosus)"},
+                {id = 140800, name = "Pharamere's Forbidden Grimoire (Krosus)"},
+                {id = 140899, name = "Beleron's Choker of Misery (Krosus)"},
+                -- Star Augur Etraeus (Boss 8)
+                {id = 140803, name = "Etraeus' Celestial Map (Star Augur)"},
+                {id = 140804, name = "Star Gate (Star Augur)"},
+                {id = 140900, name = "Brooch of the Astral Scryer (Star Augur)"},
+                {id = 140909, name = "Astromancer's Greatcloak (Star Augur)"},
+                -- Grand Magistrix Elisande (Boss 9)
+                {id = 140805, name = "Ephemeral Paradox (Elisande)"},
+                {id = 140806, name = "Convergence of Fates (Elisande)"},
+                {id = 140810, name = "Farsight Spiritjewel (Elisande)"},
+            },
+            ["NH: Gul'dan (Final)"] = {
+                {id = 140807, name = "Infernal Contract"},
+                {id = 140808, name = "Draught of Souls"},
+                {id = 140809, name = "Whispers in the Dark"},
+                {id = 140817, name = "Lionshead Lapel Clasp"},
+                {id = 140897, name = "Ring of the Scoured Clan"},
+                {id = 140919, name = "High Shadow Councilor's Wrap"},
+                {id = 137574, name = "Living Infernal Core (Mount)"},
+            },
+
+            -- ----------------------------------------------------------------
+            -- TOMB OF SARGERAS (ToS, 7.2.5) - Verified IDs from WarcraftDB
+            -- ----------------------------------------------------------------
+            ["ToS: Early Bosses"] = {
+                -- Goroth (Boss 1)
+                {id = 147009, name = "Infernal Cinders (Goroth)"},
+                {id = 147022, name = "Feverish Carapace (Goroth)"},
+                {id = 147076, name = "Charred Hymnal of the Moon (Goroth)"},
+                {id = 147084, name = "Imploding Infernal Star (Goroth)"},
+                {id = 147104, name = "Icon of Perverse Animation (Goroth)"},
+                {id = 147108, name = "Brand of Relentless Agony (Goroth)"},
+                {id = 147112, name = "Felsoul Vortex (Goroth)"},
+                {id = 146984, name = "Cloak of Stifling Brimstone (Goroth)"},
+                -- Demonic Inquisition (Boss 2)
+                {id = 147003, name = "Barbaric Mindslaver (Demonic Inquisition)"},
+                {id = 147010, name = "Cradle of Anguish (Demonic Inquisition)"},
+                {id = 147077, name = "Inexorable Truth Serum (Demonic Inquisition)"},
+                {id = 147080, name = "Blood of the Unworthy (Demonic Inquisition)"},
+                {id = 147088, name = "Smoldering Thumbscrews (Demonic Inquisition)"},
+                {id = 147096, name = "Inquisition's Master Key (Demonic Inquisition)"},
+                {id = 147013, name = "String of Extracted Incisors (Demonic Inquisition)"},
+                -- Harjatan (Boss 3)
+                {id = 147002, name = "Charm of the Rising Tide (Harjatan)"},
+                {id = 147092, name = "Ice-Threaded Conch (Harjatan)"},
+                {id = 147100, name = "Calcified Barnacle (Harjatan)"},
+                {id = 147109, name = "Harjatan's Leering Eye (Harjatan)"},
+                {id = 147020, name = "Scaled Band of Servitude (Harjatan)"},
+                -- Mistress Sassz'ine (Boss 4)
+                {id = 147004, name = "Sea Star of the Depthmother (Sassz'ine)"},
+                {id = 147011, name = "Vial of Ceaseless Toxins (Sassz'ine)"},
+                {id = 147023, name = "Leviathan's Hunger (Sassz'ine)"},
+                {id = 147081, name = "Pungent Chum (Sassz'ine)"},
+                {id = 147085, name = "Mutated Nautilus (Sassz'ine)"},
+                {id = 147093, name = "Globe of Frothing Eddies (Sassz'ine)"},
+                {id = 147113, name = "Flawless Hurricane Pearl (Sassz'ine)"},
+                {id = 146985, name = "Shroud of the Drowned Adherent (Sassz'ine)"},
+            },
+            ["ToS: Final Bosses"] = {
+                -- Sisters of the Moon (Boss 5)
+                {id = 147005, name = "Chalice of Moonlight (Sisters)"},
+                {id = 147012, name = "Umbral Moonglaives (Sisters)"},
+                {id = 147017, name = "Tarnished Sentinel Medallion (Sisters)"},
+                {id = 147078, name = "Mote of Astral Suffusion (Sisters)"},
+                {id = 147089, name = "Ferocity of the Devout (Sisters)"},
+                {id = 147097, name = "Blessing of the White Lady (Sisters)"},
+                {id = 147101, name = "Chiseled Starlight (Sisters)"},
+                {id = 147114, name = "Preserved Starlight Incense (Sisters)"},
+                {id = 147021, name = "Yathae's Thumb Ring (Sisters)"},
+                -- The Desolate Host (Boss 6)
+                {id = 147018, name = "Spectral Thurible (Desolate Host)"},
+                {id = 147024, name = "Reliquary of the Damned (Desolate Host)"},
+                {id = 147086, name = "Befouled Effigy of Elune (Desolate Host)"},
+                {id = 147106, name = "Glowing Prayer Candle (Desolate Host)"},
+                {id = 147014, name = "Locket of Splintered Souls (Desolate Host)"},
+                -- Maiden of Vigilance (Boss 7)
+                {id = 147015, name = "Engine of Eradication (Maiden)"},
+                {id = 147025, name = "Recompiled Guardian Module (Maiden)"},
+                {id = 147090, name = "Stabilized Extinction Protocol (Maiden)"},
+                {id = 147094, name = "Virus of Lethargy (Maiden)"},
+                {id = 147098, name = "Fragment of Grace (Maiden)"},
+                {id = 147115, name = "Unfurling Origination (Maiden)"},
+                {id = 147194, name = "Band of Rescinded Truths (Maiden)"},
+                -- Fallen Avatar (Boss 8)
+                {id = 147006, name = "Archive of Faith (Fallen Avatar)"},
+                {id = 147091, name = "Cleansing Ignition Catalyst (Fallen Avatar)"},
+                {id = 147107, name = "Valorous Spark of Hope (Fallen Avatar)"},
+                {id = 147193, name = "Cape of Mindless Fury (Fallen Avatar)"},
+                -- Kil'jaeden (Boss 9)
+                {id = 147007, name = "The Deceiver's Grand Design (Kil'jaeden)"},
+                {id = 147019, name = "Tome of Unraveling Sanity (Kil'jaeden)"},
+                {id = 147026, name = "Shifting Cosmic Sliver (Kil'jaeden)"},
+                {id = 147082, name = "Man'ari Blood Pact (Kil'jaeden)"},
+                {id = 147087, name = "Ruinous Ashes (Kil'jaeden)"},
+                {id = 147095, name = "Sphere of Entropy (Kil'jaeden)"},
+                {id = 147099, name = "Boon of the Prophet (Kil'jaeden)"},
+                {id = 147195, name = "Seal of the Second Duumvirate (Kil'jaeden)"},
+            },
+
+            -- ----------------------------------------------------------------
+            -- ANTORUS THE BURNING THRONE (ABT, 7.3) - Verified IDs
+            -- ----------------------------------------------------------------
+            ["ABT: Early Bosses"] = {
+                -- Garothi Worldbreaker (Boss 1)
+                {id = 151956, name = "Garothi Feedback Conduit (Garothi)"},
+                {id = 152028, name = "Spurting Reaver Heart (Garothi)"},
+                {id = 152031, name = "Doomfire Dynamo (Garothi)"},
+                {id = 152036, name = "Hellfire Ignition Switch (Garothi)"},
+                {id = 152039, name = "Viscous Reaver-Coolant (Garothi)"},
+                {id = 151937, name = "Cloak of the Burning Vanguard (Garothi)"},
+                -- Felhounds of Sargeras (Boss 2)
+                {id = 152027, name = "Gravitational Condensate (Felhounds)"},
+                {id = 152056, name = "Corrupting Dewclaw (Felhounds)"},
+                -- Antoran High Command (Boss 3)
+                {id = 151957, name = "Ishkar's Felshield Emitter (High Command)"},
+                {id = 151969, name = "Terminus Signaling Beacon (High Command)"},
+                {id = 152043, name = "Lightshield Amplifier (High Command)"},
+                {id = 152295, name = "Svirax's Grim Trophy (High Command)"},
+                -- Portal Keeper Hasabel (Boss 4)
+                {id = 151958, name = "Tarratus Keystone (Portal Keeper)"},
+                {id = 152035, name = "Blazing Dreadsteed Horseshoe (Portal Keeper)"},
+                {id = 152041, name = "Sublimating Portal Frost (Portal Keeper)"},
+                {id = 152049, name = "Fel-Engraved Handbell (Portal Keeper)"},
+                {id = 152057, name = "Crepuscular Skitterer Egg (Portal Keeper)"},
+                {id = 152063, name = "Seal of the Portalmaster (Portal Keeper)"},
+                {id = 151965, name = "Vulcanarcore Pendant (Portal Keeper)"},
+                -- Eonar the Life-Binder (Boss 5)
+                {id = 151970, name = "Vitality Resonator (Eonar)"},
+                {id = 152044, name = "Spark of Everburning Light (Eonar)"},
+                {id = 152047, name = "Ironvine Thorn (Eonar)"},
+                {id = 152054, name = "Unwavering Soul Essence (Eonar)"},
+                {id = 152061, name = "Droplets of the Cleansing Storm (Eonar)"},
+                {id = 152688, name = "Loop of the Life-Binder (Eonar)"},
+                -- Imonar the Soulhunter (Boss 6)
+                {id = 152024, name = "Fallen Magi's Seerstone (Imonar)"},
+                {id = 152042, name = "Hoarfrost-Beast Talon (Imonar)"},
+                {id = 152045, name = "Venerated Puresoul Idol (Imonar)"},
+                {id = 152050, name = "Mysterious Petrified Egg (Imonar)"},
+                -- Kin'garoth (Boss 7)
+                {id = 151955, name = "Acrid Catalyst Injector (Kin'garoth)"},
+                {id = 152034, name = "Obliterator Propellant (Kin'garoth)"},
+                {id = 152048, name = "Decimator Crankshaft (Kin'garoth)"},
+                {id = 152051, name = "Eidolon of Life (Kin'garoth)"},
+                {id = 152055, name = "Kin'garoth's Oil-Sump (Kin'garoth)"},
+                {id = 152064, name = "Band of the Sargerite Smith (Kin'garoth)"},
+            },
+            ["ABT: Varimathras-Aggramar"] = {
+                -- Varimathras (Boss 8)
+                {id = 151960, name = "Carafe of Searing Light (Varimathras)"},
+                {id = 152025, name = "Thu'rayan Lash (Varimathras)"},
+                {id = 152037, name = "Tormentor's Brand (Varimathras)"},
+                {id = 152060, name = "Neuroshock Electrode (Varimathras)"},
+                {id = 152092, name = "Nathrezim Incisor (Varimathras)"},
+                {id = 151964, name = "Seeping Scourgewing (Varimathras)"},
+                {id = 151966, name = "Riveted Choker of Delirium (Varimathras)"},
+                -- Coven of Shivarra (Boss 9)
+                {id = 152040, name = "Frigid Gloomstone (Coven of Shivarra)"},
+                {id = 152046, name = "Coven Prayer Bead (Coven of Shivarra)"},
+                {id = 152058, name = "Stormcaller's Fury (Coven of Shivarra)"},
+                {id = 152289, name = "Highfather's Machination (Coven of Shivarra)"},
+                {id = 152284, name = "Zealous Tormentor's Ring (Coven of Shivarra)"},
+                -- Aggramar (Boss 10)
+                {id = 152026, name = "Prototype Titan-Disc (Aggramar)"},
+                {id = 152033, name = "Sliver of Corruption (Aggramar)"},
+                {id = 152038, name = "Pyretic Bronze Clasp (Aggramar)"},
+                {id = 152052, name = "Spolemound Seedling (Aggramar)"},
+                {id = 152062, name = "Greatcloak of the Dark Pantheon (Aggramar)"},
+                {id = 152093, name = "Gorshalach's Legacy (Aggramar - Fire Sword)"},
+                {id = 152094, name = "Taeshalach (Aggramar - 2H Fire Sword)"},
+            },
+            ["ABT: Argus (Final)"] = {
+                -- Pantheon Trinkets (one per spec role)
+                {id = 154172, name = "Aman'Thul's Vision"},
+                {id = 154173, name = "Aggramar's Conviction"},
+                {id = 154174, name = "Golganneth's Vitality"},
+                {id = 154175, name = "Eonar's Compassion"},
+                {id = 154176, name = "Khaz'goroth's Courage"},
+                {id = 154177, name = "Norgannon's Prowess"},
+                -- Other drops
+                {id = 151972, name = "Sullied Seal of the Pantheon"},
+                {id = 152283, name = "Chain of the Unmaker"},
+                {id = 153115, name = "Scythe of the Unmaker (Polearm)"},
+            },
+        },
+    },
 }
 
 -- Create a flat searchable index
