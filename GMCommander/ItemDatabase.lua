@@ -921,9 +921,66 @@ GMC_ItemDB = {
             },
         },
     },
+
+    -- ========================================================================
+    -- TRANSMOG: ICONIC WEAPONS
+    -- ========================================================================
+    TransmogWeapons = {
+        category = "Transmog: Weapons",
+        icon = "Interface\\Icons\\INV_Sword_39",
+        subcategories = {
+            ["Classic Raids"] = {
+                {id = 19364, name = "Ashkandi, Greatsword of the Brotherhood"},
+                {id = 18832, name = "Vis'kag the Bloodletter"},
+                {id = 18208, name = "Brutality Blade"},
+                {id = 17193, name = "Sulfuron Hammer"},
+                {id = 19323, name = "Staff of the Shadow Flame"},
+                {id = 17103, name = "Azuresong Mageblade"},
+                {id = 11684, name = "Ironfoe"},
+                {id = 18805, name = "Core Hound Tooth"},
+                {id = 18816, name = "Perdition's Blade"},
+                {id = 13080, name = "Dal'Rend's Sacred Charge"},
+                {id = 13062, name = "Dal'Rend's Tribal Guardian"},
+                {id = 19352, name = "Zin'rokh, Destroyer of Worlds"},
+            },
+            ["TBC Raids"] = {
+                {id = 32837, name = "Warglaive of Azzinoth (MH)"},
+                {id = 32838, name = "Warglaive of Azzinoth (OH)"},
+                {id = 34334, name = "Thori'dal, the Stars' Fury"},
+                {id = 30901, name = "Zhar'doom, Greatstaff of the Devourer"},
+                {id = 28433, name = "Gressil, Dawn of Ruin"},
+                {id = 28430, name = "Talon of Azzinoth"},
+            },
+            ["WotLK Raids"] = {
+                {id = 49623, name = "Shadowmourne"},
+                {id = 46017, name = "Val'anyr, Hammer of Ancient Kings"},
+                {id = 50730, name = "Trauma"},
+                {id = 47477, name = "Death's Bite"},
+                {id = 40188, name = "Inevitable Defeat"},
+                {id = 40384, name = "Last Laugh"},
+            },
+            ["Cata & MoP"] = {
+                {id = 71086, name = "Dragonwrath, Tarecgosa's Rest"},
+                {id = 77188, name = "Gurthalak, Voice of the Deeps"},
+                {id = 78484, name = "Rathrak, the Poisonous Mind"},
+            },
+            ["All Legendaries"] = {
+                {id = 17182, name = "Sulfuras, Hand of Ragnaros"},
+                {id = 19019, name = "Thunderfury, Blessed Blade of the Windseeker"},
+                {id = 22589, name = "Atiesh, Greatstaff of the Guardian"},
+                {id = 32837, name = "Warglaive of Azzinoth (MH)"},
+                {id = 32838, name = "Warglaive of Azzinoth (OH)"},
+                {id = 34334, name = "Thori'dal, the Stars' Fury"},
+                {id = 46017, name = "Val'anyr, Hammer of Ancient Kings"},
+                {id = 49623, name = "Shadowmourne"},
+                {id = 71086, name = "Dragonwrath, Tarecgosa's Rest"},
+            },
+        },
+    },
 }
 
 -- Create a flat searchable index
+-- catKey is stored so tabs can scope their searches to their own categories only.
 GMC_SearchIndex = {}
 
 local function BuildSearchIndex()
@@ -932,9 +989,10 @@ local function BuildSearchIndex()
             for subCatName, items in pairs(catData.subcategories) do
                 for _, item in ipairs(items) do
                     table.insert(GMC_SearchIndex, {
-                        id = item.id,
-                        name = item.name,
-                        category = catData.category,
+                        id         = item.id,
+                        name       = item.name,
+                        category   = catData.category,
+                        catKey     = catKey,
                         subcategory = subCatName,
                         searchName = string.lower(item.name),
                     })
